@@ -25,6 +25,7 @@ const movieSchema = new mongoose.Schema(
         cast: [
             {
               name: String,
+                
               role: String,
             }
           ],
