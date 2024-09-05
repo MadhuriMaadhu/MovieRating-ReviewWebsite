@@ -1,40 +1,19 @@
 import express from 'express';
-import bcrypt from "bcrypt";
-import { generateToken } from './utils/Token.js';
-import User from '../models/userModel.js';
-import Review from '../models/reviewModel.js';
-import Movie from '../models/movieModel.js';
+import userAuth from '../../middlewares/userAuth';
+import { userSignup, userLogin, userLogout, userProfile, checkUser } from '../../controllers/userController';
 
 
 const router = express.Router();
 
-// Register a new user
-router.post('/register', async (req, res) => {
-    try {
-        const { name, email, password} = req.body;
-        if (!name || !email || !password) {
-            return res.status(400).json({ success: false, message: "all fields required" });
-        }
-        const isUserExist = await User.findOne({ email });
+router.post("/signup", userSignup);
+router.post("/login", userLogin);
+router.post("/logout",userAuth, userLogout);
 
-        if (isUserExist) {
-            return res.status(400).json({ message: "user already exist" });
-        }
+router.get("/profile", userAuth, userProfile);
+router.put("/update");
+router.delete("/delete");
 
-        const saltRounds = 10;
-        const hashedPassword = bcrypt.hashSync(password, saltRounds);
+router.get("/userList");
+router.get("/check-user", userAuth, checkUser);
 
-        const newUser = new User({ name, email, password: hashedPassword});
-        await newUser.save();
-
-        const token = generateToken(newUser._id);
-
-        res.cookie("token", token); 
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-
-    
-export default router;
+module.exports = { userRouter: router };
