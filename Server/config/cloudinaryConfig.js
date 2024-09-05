@@ -1,4 +1,3 @@
-
 import { v2 } from "cloudinary";
 
 
@@ -9,6 +8,4 @@ v2.config({
   
 });
 
-const cloudinaryInstance = v2;
-
-export default cloudinaryInstance;
+export const cloudinaryInstance = v2;
