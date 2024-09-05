@@ -1,5 +1,5 @@
 import Review from '../models/reviewModel.js';
-import Movie from '../models/movieModel.js'
+import Movie from '../models/movieModel.js';
 
 export const addReview = async (req, res) => {
     try {
