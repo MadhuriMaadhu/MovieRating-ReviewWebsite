@@ -1,6 +1,6 @@
 import express from "express";
-import userAuth from "../../middlewares/userAuth";
-import { getAverageRating, getMovieReviews, addReview, deleteReview } from "../../controllers/reviewController";
+import userAuth from "../../middlewares/userAuth.js";
+import { getAverageRating, getMovieReviews, addReview, deleteReview } from "../../controllers/reviewController.js";
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get("/movie-review/:movieId", userAuth, getMovieReviews);
 router.post("/add-review", userAuth, addReview);
 router.put("/delete/:reviewId", userAuth, deleteReview);
 
-module.exports = { reviewRouter: router };
+export default router;
