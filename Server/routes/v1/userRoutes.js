@@ -1,6 +1,6 @@
 import express from 'express';
-import userAuth from '../../middlewares/userAuth';
-import { userSignup, userLogin, userLogout, userProfile, checkUser } from '../../controllers/userController';
+import userAuth from '../../middlewares/userAuth.js';
+import { userSignup, userLogin, userLogout, userProfile, checkUser } from '../../controllers/userController.js';
 
 
 const router = express.Router();
@@ -16,4 +16,4 @@ router.delete("/delete");
 router.get("/userList");
 router.get("/check-user", userAuth, checkUser);
 
-module.exports = { userRouter: router };
+export default router;
