@@ -20,7 +20,7 @@ export const adminSignup = async (req, res, next) => {
         const newAdmin = new Admin({ name, email, password: hashedPassword});
         await newAdmin.save();
 
-        const token = adminToken(newAdmin.name, "admin");
+        const token = adminToken(newAdmin.id, "admin");
 
         res.cookie("token", token);
         res.json({ success: true, message: "admin created successfully" });
@@ -47,7 +47,7 @@ export const adminLogin = async (req, res, next) => {
             return res.status(401).json({ message: "admin is not autherized" });
         }
 
-        const token = adminToken(adminExist.name, "admin");
+        const token = adminToken(adminExist.id, "admin");
 
         res.cookie("token", token);
         res.json({ success: true, message: "admin login successfull" });
