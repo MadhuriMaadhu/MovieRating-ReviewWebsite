@@ -1,4 +1,4 @@
-import { cloudinaryInstance } from '../config/cloudinaryConfig';
+import { cloudinaryInstance } from '../config/cloudinaryConfig.js';
 
 const handleImageUpload = async (path) => {
   try {
