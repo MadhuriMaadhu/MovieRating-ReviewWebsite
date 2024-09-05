@@ -1,5 +1,5 @@
 import express from "express";
-import { adminSignup, adminLogin, adminLogout } from "../../controllers/adminController";
+import { adminSignup, adminLogin, adminLogout } from "../../controllers/adminController.js";
 
 const router = express.Router();
 
@@ -7,10 +7,16 @@ router.post("/signup", adminSignup);
 router.post("/login", adminLogin);
 router.post("/logout", adminLogout);
 
+router.put('/update', (req, res) => {
+    res.send('Update route');
+});
 
-router.put("/update");
-router.delete("/delete");
+router.delete('/delete', (req, res) => {
+    res.send('Delete route');
+});
 
-router.get("/userList");
+router.get('/userList', (req, res) => {
+    res.send('User list');
+});
 
-module.exports = { adminRouter: router };
+export default router;
