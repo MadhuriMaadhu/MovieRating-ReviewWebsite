@@ -25,7 +25,6 @@ const movieSchema = new mongoose.Schema(
         cast: [
             {
               name: String,
-                
               role: String,
             }
           ],
@@ -33,7 +32,7 @@ const movieSchema = new mongoose.Schema(
             type: Number, 
             default: 0 
         },
-        imageUrl: String,
+        image: String,
         reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     }, 
     { timestamps: true }
