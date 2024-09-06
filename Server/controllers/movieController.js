@@ -7,7 +7,7 @@ export const createMovie = async (req, res, next) => {
         const { title, description, genre,releaseDate ,director,cast} = req.body;
         let imageUrl;
 
-        if (!title || !description || !genre || !releaseDate || director || cast) {
+        if (!title || !description || !genre || !releaseDate || !director || cast) {
             return res.status(400).json({ message: "all fields required" });
         }
 
