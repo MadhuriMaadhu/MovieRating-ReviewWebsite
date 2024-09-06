@@ -7,10 +7,11 @@ export const createMovie = async (req, res, next) => {
         const { title, description, genre,releaseDate ,director,cast} = req.body;
         let imageUrl;
 
-        if (!title || !description || !genre || !releaseDate || director || cast) {
+        if (!title || !description || !genre || !releaseDate || !director || !cast) {
             return res.status(400).json({ message: "all fields required" });
         }
 
+        const parsedCast = JSON.parse(cast);
         const isMovieExist = await Movie.findOne({ title });
 
         if (isMovieExist) {
@@ -21,8 +22,7 @@ export const createMovie = async (req, res, next) => {
             imageUrl = await handleImageUpload(req.file.path);
         }
 
-        const newMovie= new Movie({ title, description, releaseDate,genre,director,cast,image: imageUrl && imageUrl  });
-        
+        const newMovie= new Movie({ title, description, releaseDate,genre,director,cast: parsedCast,image: imageUrl && imageUrl  });
         await newMovie.save();
 
         res.status(201).json({ success: true, message: "movie created successfully" });
@@ -38,6 +38,7 @@ export const updateMovie = async (req, res, next) => {
         const { title, description, releaseDate, genre,director,cast } = req.body;
         let imageUrl;
 
+        const parsedCast = JSON.parse(cast);
         const isMovieExist = await Movie.findOne({ _id: movieId });
 
         if (!isMovieExist) {
@@ -50,7 +51,7 @@ export const updateMovie = async (req, res, next) => {
 
         const updatedMovie = await Movie.findOneAndUpdate(
             { _id: movieId },
-            { title, description, releaseDate, genre, director,cast},
+            { title, description, releaseDate, genre, director,cast: parsedCast},
             { new: true }
         );
 

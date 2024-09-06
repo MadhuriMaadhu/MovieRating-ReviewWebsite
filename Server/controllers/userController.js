@@ -20,7 +20,7 @@ export const userSignup = async (req, res, next) => {
         const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
 
-        const token = generateToken(newUser.email);
+        const token = generateToken(newUser.id);
 
         res.cookie("token", token);
         res.json({ success: true, message: "user created successfully" });
@@ -47,7 +47,7 @@ export const userLogin = async (req, res, next) => {
             return res.status(401).json({ message: "user not autherized" });
         }
 
-        const token = generateToken(userExist.email);
+        const token = generateToken(userExist.id);
 
         res.cookie("token", token);
         res.json({ success: true, message: "user login successfull" });
@@ -78,6 +78,11 @@ export const userProfile = async (req, res, next) => {
         console.log(error);
         res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
     }
+};
+
+export const userList = async (req,res,next) => {
+    const users = await User.find({});
+    res.send(users);
 };
 
 export const checkUser = async (req, res, next) => {
