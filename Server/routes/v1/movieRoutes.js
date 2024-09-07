@@ -12,3 +12,4 @@ router.put("/update/:movieId", upload.single("image"), updateMovie);
 router.delete("/delete/:movieId", adminAuth, deleteMovie);
 
 export default router;
+
