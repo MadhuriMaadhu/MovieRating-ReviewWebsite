@@ -1,7 +1,7 @@
 import express from 'express';
-import apiRouter from './routes/index.js';
 import cors from 'cors';
-import  connectDB  from './config/db.js';
+import { apiRouter } from './routes/index.js';
+import { connectDB } from './config/db.js';
 import cookieParser from 'cookie-parser';
 import { handleError } from './utils/error.js';
 
@@ -32,5 +32,4 @@ app.all('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+  console.log(`Example app listening on port ${port}`);});
