@@ -1,16 +1,18 @@
 import jwt from "jsonwebtoken";
 
-const userAuth = (req, res, next) => {
+export const userAuth = (req, res, next) => {
     try {
         console.log('hitted');
         
         const { token } = req.cookies;
+        
         if (!token) {
             return res.status(401).json({ success: false, message: "user not autherized" });
         }
         const tokenVerified = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
         if (!tokenVerified) {
-            return res.status(401).json({ success: false, message: "user not autherizedF" });
+            return res.status(401).json({ success: false, message: "user not autherized" });
         }
 
         req.user = tokenVerified;
@@ -21,5 +23,3 @@ const userAuth = (req, res, next) => {
         res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
     }
 };
-
-export default userAuth;

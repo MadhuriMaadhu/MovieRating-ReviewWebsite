@@ -1,22 +1,12 @@
 import express from "express";
-import { adminSignup, adminLogin, adminLogout } from "../../controllers/adminController.js";
+import { adminSignup, adminLogin, adminLogout, checkAdmin } from "../../controllers/adminController.js";
+import { adminAuth } from "../../middlewares/adminAuth.js";
 
 const router = express.Router();
 
 router.post("/signup", adminSignup);
 router.post("/login", adminLogin);
 router.post("/logout", adminLogout);
+router.get("/check-admin", adminAuth, checkAdmin) 
 
-router.put('/update', (req, res) => {
-    res.send('Update route');
-});
-
-router.delete('/delete', (req, res) => {
-    res.send('Delete route');
-});
-
-router.get('/userList', (req, res) => {
-    res.send('User list');
-});
-
-export default router;
+export { router as adminRouter };
