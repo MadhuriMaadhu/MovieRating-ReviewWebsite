@@ -80,76 +80,85 @@ export default function Profile() {
 
     return (
       <div className="p-4 text-white">
-        <h2 className="text-xl font-bold bg-red-500 mb-4">Profile</h2>
-        <div className="mb-4">
-         
-          {isEditing ? (
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="border-2 focus:outline-lime-600 pl-2 text-gray-600 sm-w-full sm:mx-4 lg:w-64"
-            />
-          ) : (
-            <p>{name}</p>
-          )}
-        </div>
-  
-        <div className="mb-4">
-          
-          {isEditing ? (
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border-2 focus:outline-lime-600 pl-2 text-gray-600 sm-w-full sm:mx-4 lg:w-64"
-            />
-          ) : (
-            <p>{email}</p>
-          )}
-        </div>
-  
-        <button
-          onClick={isEditing ? handleSaveClick : handleEditClick}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          {isEditing ? 'Save' : 'Edit'}
-        </button>
+        <div className="profile-section">
+          <div
+            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 20)" }}
+            className="profile-card">
+            <div className="profile-header">
+              <h2>Profile</h2>
+            </div>
+            <div className="profile-details bg-slate-800 border border-red-600 text-white">
+              {/* Name Field */}
+              <div className="profile-field">
+                {isEditing ? (
+                  <input
+                    type="text"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                ) : (
+                  <p>{name}</p>
+                )}
+              </div>
 
-        <div className="mt-20">
+              {/* Email Field */}
+              <div className="profile-field">
+                {isEditing ? (
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                ) : (
+                  <p>{email}</p>
+                )}
+              </div>
 
-          <div className="py-10">
-        
-            <h2 className="text-xl text-red-500 font-bold mb-4 underline">Reviews of { name }</h2>
-          <div className="w-full">
-            <ul className="gap-4">
-              {reviews.length > 0 ? (
-                 reviews.map((review, index) => (
-                  <li key={index}>
-                    <div className="my-5 mx-10 bg-neutral-200 border-2 border-bg-slate-600">
-                      <div className="flex justify-between pr-2 mb-2">
-                        <span className="text-sm text-slate-600 pl-2 pt-1 font-bold">{review.movieId.title}</span>
-                        <span className="text-xs text-gray-500 pt-1 pr-2">{review.createdAt}</span>
-                      </div>
-                      <p className="text-slate-600 border-4 p-2 border-white lg:text-lg mx-2 my-4">{review.comment}</p>
-                      <div className="flex justify-end pr-2 pb-1">
-                        <Rating rating={review.rating} />
-                      </div>
-                    </div>
-                  </li>
-                ))) : (
-                <div className="flex justify-center mt-10">
-                  <h3>no reviews yet</h3>
-                </div>
-              )}
-                    
-            </ul>
+              {/* Edit/Save Button */}
+              <div className="profile-actions">
+                <button onClick={isEditing ? handleSaveClick : handleEditClick}>
+                  {isEditing ? "Save" : "Edit"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-       </div>
+
+        <div className="mt-10">
+
+          <div className="py-10">
+
+            <h2 className="text-xl text-red-500 font-bold mb-4 underline">Reviews of {name}</h2>
+            <div className="w-full">
+              <ul className="gap-4">
+                {reviews.length > 0 ? (
+                  reviews.map((review, index) => (
+                    <li key={index}>
+                      <div className="my-5 mx-10 bg-neutral-200 border-2">
+                        <div className="flex justify-between pr-2 mb-2">
+                          <span className="text-sm text-slate-600 pl-2 pt-1 font-bold">    {review.movieId?.title || 'Unknown Movie'}</span>
+                          <span className="text-xs text-gray-500 pt-1 pr-2">{review.createdAt}</span>
+                        </div>
+                        <p className="text-slate-600 border-4 p-2 border-white lg:text-lg mx-2 my-4">{review.comment}</p>
+                        <div className="flex justify-end pr-2 pb-1">
+                          <Rating rating={review.rating} />
+                        </div>
+                      </div>
+                    </li>
+                  ))) : (
+                  <div className="flex justify-center mt-10">
+                    <h3>no reviews yet</h3>
+                  </div>
+                )}
+
+              </ul>
+            </div>
+          </div>
+
+        </div>
 
       </div>
     );

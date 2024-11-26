@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';  // Added useLocation for path check
 import { searchMovies } from '../actions/actions.js';
 import { FaSearch } from "react-icons/fa";
-import { clearMovieData,clearError } from '../reducers/movieReducer.js';
+import { clearMovieData, clearError } from '../reducers/movieReducer.js';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const location = useLocation(); // Get the current location/path
+
   const { movieId, error } = useSelector((state) => state.search);
   
   const handleSearch = (e) => {
@@ -22,15 +23,21 @@ const SearchBar = () => {
 
   useEffect(() => {
     if (movieId === "not found") {
-       alert(movieId);
+      alert(movieId);
     } else if (movieId) {
-
-      navigate(`/user/movies/${movieId}`);
+      // Check if current page is part of the admin section
+      if (location.pathname.startsWith("/admin")) {
+        // Admin search result (for admin dashboard)
+        navigate(`/admin/movies/${movieId}`);
+      } else {
+        // User section search result
+        navigate(`/user/movies/${movieId}`);
+      }
       dispatch(clearMovieData());
     } else if (error) {
       alert("No movie found");
     }
-  }, [movieId, error, navigate, dispatch]);
+  }, [movieId, error, navigate, dispatch, location.pathname]);  // Include location.pathname to monitor path changes
 
   return (
     <div>

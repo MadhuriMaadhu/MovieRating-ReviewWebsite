@@ -27,8 +27,14 @@ import EasyMethod from "./components/protected-routes/EasyMethod.jsx";
 import UserRoutes from "./components/protected-routes/UserRoutes.jsx";
 import { AdminLogout } from "./components/AdminLogout.jsx";
 import { UserLogout } from './components/UserLogout.jsx';
+import UserListPage from './components/admin/UserListPage.jsx';
 
 const router = createBrowserRouter([
+  
+  {
+    path:"/",
+    element: <App/>
+  },    
   {
     element: <HomeLayout />,
     children: [
@@ -117,7 +123,12 @@ const router = createBrowserRouter([
       {
         path: "/admin/movies/delete/:id",
         element: <DeleteMovie />
+      },
+      {
+        path: "/admin/user-list", // Add this route
+        element: <UserListPage />
       }
+     
     ]
   }
 ])

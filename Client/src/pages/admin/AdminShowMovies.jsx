@@ -37,37 +37,61 @@ export default function AdminShowMovies() {
                 <p>No movies found</p>
             ) : (
                         
-                <section className='border-t border-t-red-600 pb-10 py-5 mt-10'>
-                    <h1 className='text-red-600 text-3xl mb-5 font-bold leading-8'>Movies</h1>
-                    <div className="flex flex-wrap border border-red-600 mx-10 py-10 justify-evenly gap-20">
-                
-                        {movies.map((movie) => (
-                            <div key={movie._id} className='border border-red-600 bg-gray-600 rounded-md pt-2 lg:px-20'>
-                                <Link to={`/admin/movies/${movie._id}`}>
-                                    <div className="movie-card border border-red-700 w-48 h-64">
-                 
-                                        <img src={movie.image} alt={movie.title} className='w-full h-full object-cover rounded-md' />
-               
-                                    </div>
-                                    <div className="px-4 py-2">
-                                        <h2 className='text-lg text-white'>{movie.title}</h2>
-                                        <p className='text-lg text-white'>{movie.averageRating ? movie.averageRating.toFixed(1) : 'No Ratings Yet'}</p>
-                                    </div>
-              
-                                </Link>
-                                <div className="flex justify-center gap-x-20">
-                                    <Link to={`/admin/movies/edit/${movie._id}`}>
-                                        <AiOutlineEdit className="text-xl w-6 h-6 text-cyan-700" />
+                    <section className="border-t border-red-600 pb-10 pt-5 mt-10">
+                        <div className="flex flex-wrap mx-auto max-w-7xl py-6 justify-center" style={{ gap: '20px' }}>
+                            {movies.map((movie) => (
+                                <div
+                                    key={movie._id}
+                                    className="movie-card-container border border-red-800 shadow-md rounded-lg bg-slate-800 overflow-hidden hover:shadow-lg"
+                                    style={{
+                                        width: '280px',
+                                        margin: '10px',
+                                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 20)"
+                                    }}
+                                >
+                                    <Link to={`/admin/movies/${movie._id}`}>
+                                        <div className="movie-card w-full h-64 overflow-hidden">
+                                            <img
+                                                src={movie.image}
+                                                alt={movie.title}
+                                                className="w-full h-full object-cover rounded-md"
+                                            />
+                                        </div>
+                                        <div className="px-4 py-4">
+                                            <h2 className="text-xl font-semibold text-white truncate">
+                                                {movie.title}
+                                            </h2>
+                                            <p className="text-sm text-white mt-2">
+                                                {movie.averageRating
+                                                    ? `⭐ ${movie.averageRating.toFixed(1)}`
+                                                    : 'No Ratings Yet'}
+                                            </p>
+                                        </div>
                                     </Link>
-                                    <Link to={`/admin/movies/delete/${movie._id}`}>
-                                        <MdOutlineDelete className="text-xl w-6 h-6 text-red-900" />
-                                    </Link>
+                                    <div className="flex justify-between py-2 border-t border-red-800">
+                                        <Link
+                                            to={`/admin/movies/edit/${movie._id}`}
+                                            className="flex items-center text-blue-600 hover:text-blue-800"
+                                        >
+                                            <AiOutlineEdit className="text-lg text-lime-400" />
+                                            <span className="ml-1 text-sm text-lime-400">Edit</span>
+                                        </Link>
+                                        <Link
+                                            to={`/admin/movies/delete/${movie._id}`}
+                                            className="flex items-center text-red-600 ml-auto"
+                                        >
+                                            <MdOutlineDelete className="text-lg" />
+                                            <span className="ml-1 text-sm">Delete</span>
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                            ))}
+                        </div>
+                    </section>
+
+              
             )}
      </div>
     );
   };
+  

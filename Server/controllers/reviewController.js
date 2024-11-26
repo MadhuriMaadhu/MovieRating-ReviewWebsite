@@ -14,7 +14,7 @@ export const addReview = async (req, res) => {
             
         await review.save();
 
-        res.status(201).json({ succes: true,message: "Review was successful", data:review });
+        res.status(201).json({ success: true,message: "Review was successful", data:review });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error });
     }

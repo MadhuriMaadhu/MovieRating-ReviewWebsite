@@ -1,25 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useEffect } from "react";
 
-export const AdminLogout = () => {
-  
-    const navigate = useNavigate();
-    useEffect(() => {
-        const logout = async () => {
-            try {
-                await axios.post("http://localhost:3000/api/v1/admin/logout",{}, {
-                    withCredentials: true,
-                });
 
-                navigate("/admin/signin");
-        
-            } catch (error) {
-                console.error("Error logging out", error);
-            }
-        }
-    logout();
-    }, [navigate]);
-
-    return null;
+const Rating = ({ rating }) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<span key={i} style={{ color: 'gold' }}>&#9733;</span>);
+      } else {
+        stars.push(<span key={i}>&#9734;</span>);
+      }
+    }
+    return <div>{stars}</div>;
   };
+  
+  export default Rating;

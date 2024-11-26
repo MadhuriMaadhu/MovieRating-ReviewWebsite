@@ -1,9 +1,8 @@
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
 
-export default function UserList() {
+export default function UserList({isDarkMode}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -17,7 +16,10 @@ export default function UserList() {
   }, []);
 
   return (
-    <div className="border border-red-400 rounded-md m-4">
+    <div 
+    style={{ boxShadow: '0px 4px 10px rgba(0, 0, 0, 10)' }}
+
+    className="border border-red-400 rounded-md m-4 table-container">
       
       <TableContainer>
         <Table variant="simple">
@@ -48,7 +50,7 @@ export default function UserList() {
                           setTimeout(() => window.location.reload(), 1000);
                         }
                       }}
-                      className="rounded-md bg-red-500 px-2 py-1 text-white"
+                      className="rounded-md bg-red-600 px-2 py-1 text-white submit-button"
                     >
                       Remove
                     </button>

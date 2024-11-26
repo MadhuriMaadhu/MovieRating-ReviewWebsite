@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Reviews from "../shared/ShowReviews";
 
-export default function AdminMoviePage() {
+export default function AdminMoviePage({isDarkMode}) {
   const { id } = useParams(); 
   const [movie, setMovie] = useState(null);
   const [averageRating, setAverageRating] = useState(null);
@@ -54,15 +54,19 @@ export default function AdminMoviePage() {
              <p>Average Rating : {averageRating ? averageRating.toFixed(1) : 'No Ratings Yet'}</p>
             </div>
           </div>
-            <section className="flex w-full md:w-1/3 lg:w-1/2 flex-1 border-2 bg-orange-900 border-red-600 justify-center lg:mr-5">
-              <div className="border-2 border-red-600">
-                <img src={movie.image} alt={movie.title} />
+            <section className="flex w-full md:w-1/3 lg:w-1/2 flex-1 border-2 bg-orange-900 border-red-600 justify-center items-center lg:mr-5">
+              <div
+                style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 20)" }}
+
+                className="bg-white border-2 rounded-lg shadow-lg p-">
+                <img src={movie.image} alt={movie.title} className="w-full h-auto rounded-md" />
               </div>
-            </section> 
+            </section>
+
           </div>
           <section className="mt-20 text-xl">
            <h2 className="font-bold border-y border-y-red-600 my-4 py-4 bg-red-500">Summary</h2>
-           <p>{movie.description}</p>
+           <p className={`description-text ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>{movie.description}</p>
           </section>
           <section className="mt-20 text-xl">
               <h2 className="font-bold border-y border-y-red-600 my-4 py-4 bg-red-500">Reviews</h2>

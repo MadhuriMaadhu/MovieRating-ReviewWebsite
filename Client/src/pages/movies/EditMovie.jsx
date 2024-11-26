@@ -4,6 +4,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 const schema = yup.object({
   title: yup.string().required("Title is required"),
@@ -103,19 +105,28 @@ export default function UpdateMovie() {
         }
       );
       
-        alert(res.data.message);
+      Swal.fire({
+        icon: "success",
+        title: "Movie Updated Successfully",
+        text: res.data.message,
+        confirmButtonColor: "#3085d6",
+      }).then(() => {
         navigate(`/admin/movies/${id}`);
-      
+      });
     } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else if (error.request) {
-        alert("no response received from server");
-      } else {
-        alert("an error occured while adding movie");
-      }
+      console.log(error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Movie Update Failed",
+        text:
+          error.response?.data?.message ||
+          "An error occurred. Please try again.",
+        confirmButtonColor: "#d33",
+      });
     }
   };
+
 
   return loading ? (
     <p>Loading...</p>
@@ -169,7 +180,7 @@ export default function UpdateMovie() {
          
           
             
-          <h4 className="text-lg font-semibold">Cast</h4>
+          <h4 className="text-lg font-semibold text-blue-500">Cast</h4>
           {fields.map((item, index) => (
             <div key={item.id} className="flex gap-x-2">
               <input
@@ -208,7 +219,7 @@ export default function UpdateMovie() {
 
           <input
             type="submit"
-            className="rounded-md bg-lime-400 py-1 text-white hover:bg-lime-500 cursor-pointer"
+            className="bg-red-600 mt-4 py-1 p-3 text-white rounded-md submit-button"
             value="Update Movie"
           />
         </form>

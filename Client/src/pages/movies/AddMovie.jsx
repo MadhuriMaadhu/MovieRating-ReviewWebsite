@@ -2,6 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as yup from "yup";
+import Swal from "sweetalert2";
+
 
 const schema = yup.object({
   title: yup.string().required('Title is required'),
@@ -61,26 +63,35 @@ export default function AddMovie() {
         }
       );
       
-      alert(res.data.message);
-      
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else if (error.request) {
-        alert("no response received from server");
-      } else {
-        alert("an error occured while adding movie");
-      }
-    }
-  };
+      Swal.fire({
+        icon: "success",
+        title: "Movie Created Successful",
+        text: success,
+        confirmButtonColor: "#d33",
+    }).then(() => {
+        navigate("/user/home");
+    });
+
+} catch (error) {
+    console.log(error);
+
+    // SweetAlert for error
+    Swal.fire({
+        icon: "error",
+        title: "Movie Created Failed",
+        text: error.response?.data?.message || "An error occurred. Please try again.",
+        confirmButtonColor: "#d33",
+    });
+}
+};
 
   return (
     <main>
-      
-      <div className="flex justify-center mx-2">
+      <div className="flex justify-center mx-2 overflow-y-hidden">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col flex-wrap gap-y-2 bg-sky-900 rounded-md border border-red-400 p-6 max-w-[350px] my-8"
+          style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 20)" }}
+          className=" addmovie-from flex flex-col flex-wrap gap-y-2 bg-slate-700 rounded-md border border-red-600 p-6 max-w-[350px] mt-20 my-8"
         >
           <input
             {...register("title")}
@@ -122,7 +133,7 @@ export default function AddMovie() {
           />
           {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
          
-          <h4 className="text-lg font-semibold">Cast</h4>
+          <h4 className="text-lg font-semibold text-blue-500">Cast</h4>
           {fields.map((item, index) => (
             <div key={item.id} className="flex gap-x-2">
               <input
@@ -135,25 +146,22 @@ export default function AddMovie() {
                 placeholder="Name"
                 className="block w-full bg-neutral-200 rounded-lg border border-red-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
               />
-              <button type="button" onClick={() => remove(index)} className="text-red-500">Remove</button>
+              <button type="button" onClick={() => remove(index)} className="text-red-600">Remove</button>
             </div>
           ))}
-          <button type="button" onClick={() => append({ role: "", name: "" })} className="text-blue-500">
-            Add Cast
+          <button type="button" onClick={() => append({ role: "", name: "" })} className="bg-red-600 py-1 pt-3 mt-5 text-white rounded-md submit-button">Add Cast
           </button>
           {errors.cast && <p className="text-sm text-red-500">{errors.cast.message}</p>}
 
           <input
             {...register("image")}
             type="file"
-            className="block w-full bg-neutral-200 rounded-lg border border-red-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+            className="block w-full bg-neutral-200 rounded-lg border border-red-300 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 mt-5"
           />
           {errors.image && <p className="text-sm text-red-500">{errors.image.message}</p>}
 
-          <input
-            type="submit"
-            className="rounded-md bg-lime-400 py-1 text-white hover:bg-lime-500 cursor-pointer"
-          />
+          <button className="bg-red-600 mt-5 py-1 p-3 text-white rounded-md submit-button">Submit</button>
+
         </form>
       </div>
     </main>
