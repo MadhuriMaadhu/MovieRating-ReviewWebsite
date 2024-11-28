@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "postinstall": "npm rebuild bcrypt --build-from-source"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -26,9 +25,5 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
-  },
-  "engines": {
-    "node": "18.x",
-    "npm": "8.x"
   }
 }

@@ -1,5 +1,5 @@
 import { adminToken } from "../utils/Token.js";
-import bcrypt from "bcrypt.js";
+import bcrypt from "bcrypt";
 import Admin from "../models/adminModel.js";
 
 export const adminSignup = async (req, res, next) => {
